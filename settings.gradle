@@ -1,0 +1,20 @@
+pluginManagement {
+    repositories {
+        jcenter()
+        gradlePluginPortal()
+        maven { setUrl("https://dl.bintray.com/kotlin/kotlin-dev") }
+    }
+
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "kotlin-multiplatform" || requested.id.id == "org.jetbrains.kotlin.multiplatform") {
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
+            }
+        }
+    }
+}
+
+enableFeaturePreview('GRADLE_METADATA')
+
+include ':framework'
+include ':exported'
