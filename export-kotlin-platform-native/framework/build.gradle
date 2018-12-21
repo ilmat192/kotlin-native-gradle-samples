@@ -1,0 +1,23 @@
+apply plugin: "org.jetbrains.kotlin.platform.native"
+
+dependencies {
+    // Declare a dependency to be exported.
+    export project(':exported')
+
+    // It's possible to declare a maven dependency to be exported.
+    // But due to current limitations of Gradle metadata such a dependency
+    // should be either a platform one (e.g.
+    // 'kotlinx-coroutines-core-native_debug_macos_x64' instead of
+    // 'kotlinx-coroutines-core-native') or be exported transitively.
+}
+
+// Workaround for KT-28936.
+// Remove if the dependencies should be exported transitively.
+configurations.matching { it.name.startsWith("export") }.all {
+    transitive = false
+}
+
+sourceSets.main.component {
+    targets = [ 'macos_x64' ]
+    outputKinds = [ FRAMEWORK ]
+}
