@@ -1,6 +1,5 @@
 plugins {
-    // Note: 1.3.20 is used.
-    id("org.jetbrains.kotlin.multiplatform").version("1.3.20-eap-100")
+    id("org.jetbrains.kotlin.multiplatform").version("1.3.30-eap-125")
 }
 
 repositories {
