@@ -11,12 +11,6 @@ dependencies {
     // 'kotlinx-coroutines-core-native') or be exported transitively.
 }
 
-// Workaround for KT-28936.
-// Remove if the dependencies should be exported transitively.
-configurations.matching { it.name.startsWith("export") }.all {
-    transitive = false
-}
-
 sourceSets.main.component {
     targets = [ 'macos_x64' ]
     outputKinds = [ FRAMEWORK ]
