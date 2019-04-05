@@ -18,11 +18,18 @@ kotlin {
     val ios64 = iosArm64("ios64")
     val iosSim = iosX64("iosSim")
 
+    // If an initial framework has a custom base name, the fat framework must have the same base name.
+    // See https://youtrack.jetbrains.com/issue/KT-30805.
+    val frameworkName = "my_framework"
+
     configure(listOf(ios32, ios64, iosSim)) {
-        binaries.framework()
+        binaries.framework {
+            baseName = frameworkName
+        }
     }
 
     tasks.create("debugFatFramework", FatFrameworkTask::class) {
+        baseName = frameworkName
         from(
             ios32.binaries.getFramework("DEBUG"),
             ios64.binaries.getFramework("DEBUG"),
@@ -35,6 +42,7 @@ kotlin {
 
 
     tasks.create("releaseFatFramework", FatFrameworkTask::class) {
+        baseName = frameworkName
         from(
             ios32.binaries.getFramework("RELEASE"),
             ios64.binaries.getFramework("RELEASE"),
@@ -45,4 +53,3 @@ kotlin {
         description = "Builds a universal (fat) release framework"
     }
 }
-
